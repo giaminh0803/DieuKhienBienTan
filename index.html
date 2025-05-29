@@ -340,9 +340,10 @@
 
         function updateChart() {
             const now = new Date();
+	    const hours= now.getHours().toString().padStart(2, "0");
             const seconds = now.getSeconds().toString().padStart(2, "0");
             const minutes = now.getMinutes().toString().padStart(2, "0");
-            const timeLabel = `${minutes}:${seconds}`;
+            const timeLabel = `${hours}:${minutes}:${seconds}`;
 
             if (speedChart.data.labels.length >= 20) {
                 speedChart.data.labels.shift();
@@ -455,7 +456,7 @@
         };
 
         window.stopMotor = function () {
-	    set(ref(db, "TocDoNhap"), 0)
+            set(ref(db, "TocDoNhap"), 0)
             set(ref(db, "NBStop"), 1)
                 .then(() => {
                     alert("🛑 Motor Stopped - Đã gửi NBStop=1 lên Firebase");
@@ -464,6 +465,8 @@
                     console.error("Lỗi gửi NBStop:", error);
                     alert("❌ Lỗi gửi lệnh Stop");
                 });
+           
+
         };
 
         window.onload = function () {
