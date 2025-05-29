@@ -345,7 +345,7 @@
             const minutes = now.getMinutes().toString().padStart(2, "0");
             const timeLabel = `${hours}:${minutes}:${seconds}`;
 
-            if (speedChart.data.labels.length >= 20) {
+            if (speedChart.data.labels.length >= 30) {
                 speedChart.data.labels.shift();
                 speedChart.data.datasets[0].data.shift();
                 speedChart.data.datasets[1].data.shift();
