@@ -294,8 +294,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        const tocDoNhapRef = ref(db, "TocDoNhap");
-        const tocDoThucRef = ref(db, "Tocdothuc/value");
+        const tocDoNhapRef = ref(db, "TocDoNhap/value");
+        const tocDoThucRef = ref(db, "TocDoThuc/value");
 
         let setSpeed = 0;
         let realSpeed = 0;
@@ -345,7 +345,7 @@
             const minutes = now.getMinutes().toString().padStart(2, "0");
             const timeLabel = `${hours}:${minutes}:${seconds}`;
 
-            if (speedChart.data.labels.length >= 30) {
+            if (speedChart.data.labels.length >= 20) {
                 speedChart.data.labels.shift();
                 speedChart.data.datasets[0].data.shift();
                 speedChart.data.datasets[1].data.shift();
@@ -397,7 +397,7 @@
             const value = parseInt(input);
             if (!isNaN(value)) {
                 setSpeed = value;
-                set(ref(db, "TocDoNhap"), value).catch((e) =>
+                set(ref(db, "TocDoNhap/value"), value).catch((e) =>
                     console.error("Lỗi gửi TocDoNhap:", e)
                 );
                 document.getElementById("set-speed").innerText = "SET: " + setSpeed;
@@ -430,7 +430,7 @@
                 });
 
             // Cập nhật TocDoNhap tương ứng
-            set(ref(db, "TocDoNhap"), tocDoValue)
+            set(ref(db, "TocDoNhap/value"), tocDoValue)
                 .then(() => {
                     console.log(`TocDoNhap = ${tocDoValue} đã gửi lên Firebase`);
                     // Cập nhật trực tiếp biến và giao diện để đồng bộ ngay
@@ -456,7 +456,7 @@
         };
 
         window.stopMotor = function () {
-            set(ref(db, "TocDoNhap"), 0)
+            set(ref(db, "TocDoNhap/value"), 0)
             set(ref(db, "NBStop"), 1)
                 .then(() => {
                     alert("🛑 Motor Stopped - Đã gửi NBStop=1 lên Firebase");
